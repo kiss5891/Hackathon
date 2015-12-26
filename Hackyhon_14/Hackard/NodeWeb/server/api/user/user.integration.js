@@ -62,4 +62,54 @@ describe('User API:', function() {
         .end(done);
     });
   });
+
+  describe('POST /api/users/:id/events', function() {
+    var agent;
+    var token;
+    before(function(done) {
+      agent = request.agent(app);
+      agent
+      .post('/auth/local')
+      .send({email: 'test@example.com', password: 'password'})
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .end((err, res) => {
+        res.body.token.should.not.equal(null);
+        res.body.token.should.not.equal(undefined);
+        token = res.body.token;
+        done();
+      });
+    });
+
+    it('do post', function(done) {
+      agent
+      .get('/api/users/me')
+      .set('authorization', 'Bearer ' + token)
+      .then(function(res) {
+        agent
+        .post('/api/users/'+res.body._id+'/events')
+        .set('authorization', 'Bearer ' + token)
+        .send({title: 'asdsdsadasdfsdfa'})
+        .expect(200)
+        .expect('Content-Type', /json/)
+        .end((err, res) => {
+          res.body.length.should.equal(2);
+          res.body[0].user.toString().should.equal(user._id.toString());
+          res.body[0].title.should.equal('asdsdsadasdfsdfa');
+          res.body[1].should.equal(1);
+          agent
+          .get('/api/users/'+user._id.toString()+'/events')
+          .set('authorization', 'Bearer ' + token)
+          .expect(200)
+          .expect('Content-Type', /json/)
+          .end((err, res) => {
+            res.body.length.should.equal(1);
+            res.body[0].user.toString().should.equal(user._id.toString());
+            res.body[0].title.should.equal('asdsdsadasdfsdfa');
+            done();
+          });
+        });
+      });
+    });
+  });
 });

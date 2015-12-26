@@ -28,6 +28,9 @@ module.exports = function(config) {
       'client/bower_components/lodash/dist/lodash.compat.js',
       'client/bower_components/angular-socket-io/socket.js',
       'client/bower_components/angular-validation-match/dist/angular-validation-match.min.js',
+      'client/bower_components/d3/d3.js',
+      'client/bower_components/nvd3/nv.d3.js',
+      'client/bower_components/angularjs-nvd3-directives/dist/angularjs-nvd3-directives.js',
       'client/bower_components/angular-mocks/angular-mocks.js',
       // endbower
       'node_modules/socket.io-client/socket.io.js',

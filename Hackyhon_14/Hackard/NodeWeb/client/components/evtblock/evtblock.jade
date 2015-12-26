@@ -1,0 +1,8 @@
+div(ng-controller='EvtblockController')
+  .evtblock
+    .evt-title {{item.title}}
+    .evtblockinfo
+      div {{item.date}}
+    .evtprice(ng-show="item.isPrice")
+      .fa.fa-star-o
+      .evtpricenum 1

@@ -10,7 +10,8 @@ angular.module('hackardWebApp', [
   'ngRoute',
   'btford.socket-io',
   'ui.bootstrap',
-  'validation.match'
+  'validation.match',
+  'nvd3ChartDirectives'
 ])
   .config(function($routeProvider, $locationProvider) {
     $routeProvider

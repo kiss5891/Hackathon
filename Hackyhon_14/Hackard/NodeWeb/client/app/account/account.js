@@ -30,6 +30,12 @@ angular.module('hackardWebApp')
         controller: 'SettingsController',
         controllerAs: 'vm',
         authenticate: true
+      })
+      .when('/profile', {
+        templateUrl: 'app/account/profile/profile.html',
+        controller: 'ProfileController',
+        controllerAs: 'vm',
+        authenticate: true
       });
   })
   .run(function($rootScope) {

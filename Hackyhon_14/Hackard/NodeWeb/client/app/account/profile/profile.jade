@@ -1,0 +1,12 @@
+navbar
+.container
+  .row
+    .col-sm-12
+      h1 Profile
+     .col-sm-12
+      img.profile-avatar
+      label.profile-name {{vm.user.name}}
+      div(ng-repeat="item in vm.user.skills")
+        skillbar(models="vm.user.skills" model="item" max="vm.max")
+      div(ng-repeat="item in vm.user.events")
+        evtblock(model="item")

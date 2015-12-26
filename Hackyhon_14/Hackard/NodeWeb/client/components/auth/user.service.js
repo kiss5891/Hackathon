@@ -6,7 +6,7 @@ function UserResource($resource) {
   return $resource('/api/users/:id/:controller', {
     id: '@_id'
   }, {
-    changePassword: {
+    updateSetting: {
       method: 'PUT',
       params: {
         controller:'password'

@@ -2,9 +2,9 @@ navbar
 .container
   .row
     .col-sm-12
-      h1 Change Password
+      h1 Setting
     .col-sm-12
-      form.form(name='form', ng-submit='vm.changePassword(form)', novalidate='')
+      form.form(name='form', ng-submit='vm.updateSetting(form)', novalidate='')
         .form-group
           label Current Password
           input.form-control(type='password'
@@ -18,7 +18,7 @@ navbar
           input.form-control(type='password'
             name='newPassword'
             ng-model='vm.user.newPassword'
-            ng-minlength='3', required='')
+            ng-minlength='3')
           p.help-block(ng-show='(form.newPassword.$error.minlength || form.newPassword.$error.required) && (form.newPassword.$dirty || vm.submitted)')
             | Password must be at least 3 characters.
         .form-group
@@ -27,9 +27,15 @@ navbar
             name='confirmPassword'
             ng-model='vm.user.confirmPassword'
             match="vm.user.newPassword"
-            ng-minlength='3', required='')
-          p.help-block(ng-show='fvm.orm.confirmPassword.$error.match && vm.submitted')
+            ng-minlength='3')
+          p.help-block(ng-show='form.confirmPassword.$error.match && vm.submitted')
             | Passwords must match.
+        .form-group
+          label NFC
+          input.form-control(type='text'
+            name='nfc'
+            ng-model='vm.user.nfc'
+            mongoose-error='')
 
         p.help-block  {{ vm.message }}
 

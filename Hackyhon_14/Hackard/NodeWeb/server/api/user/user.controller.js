@@ -1,6 +1,7 @@
 'use strict';
 
 import User from './user.model';
+import Event from './event.model';
 import passport from 'passport';
 import config from '../../config/environment';
 import jwt from 'jsonwebtoken';
@@ -33,7 +34,19 @@ function respondWith(res, statusCode) {
 export function index(req, res) {
   User.findAsync({}, '-salt -password')
     .then(users => {
-      res.status(200).json(users);
+      var promises = users.map(user => (
+        new Promise((resolve, reject) => {
+          Event.find({
+            _id: {$in: user.events}
+          }, (err, events) => {
+            user.events = events;
+            resolve(user);
+          });
+        })
+      ));
+      Promise.all(promises).then(users => {
+        res.status(200).json(users);
+      });
     })
     .catch(handleError(res));
 }
@@ -50,7 +63,6 @@ export function create(req, res, next) {
       var token = jwt.sign({ _id: user._id }, config.secrets.session, {
         expiresIn: 60 * 60 * 5
       });
-      res.json({ token });
     })
     .catch(validationError(res));
 }
@@ -104,6 +116,31 @@ export function changePassword(req, res, next) {
         return res.status(403).end();
       }
     });
+}
+
+/**
+ * Create a user's event
+ */
+export function createEvent(req, res, next) {
+  var userId = req.params.id || req.user._id;
+  var newEvent = new Event(req.body);
+  newEvent.user = userId;
+  newEvent.saveAsync()
+    .then(event => {
+      res.status(200).json(event);
+    })
+    .catch(validationError(res));
+}
+
+/**
+ * destroy a user's event
+ */
+export function destroyEvent(req, res, next) {
+  Event.findByIdAndRemoveAsync(req.params.id)
+    .then(function() {
+      res.status(204).end();
+    })
+    .catch(handleError(res));
 }
 
 /**

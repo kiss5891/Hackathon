@@ -10,7 +10,13 @@ angular.module('hackardWebApp')
     controller: 'EvtblockController',
     controllerAs: 'eb',
     link: function(scope) {
-      var dateStr = new Date(scope.model.date).toISOString();
+      var dateStr = '';
+      try {
+        dateStr = new Date(scope.model.date).toISOString();
+      }
+      catch(err) {
+        dateStr = scope.model.date || '';
+      }
       scope.item = {
         title: scope.model.title,
         date: dateStr.substring(0, dateStr.indexOf('T')),

@@ -2,22 +2,29 @@
 
 class ProfileController {
 
-  constructor(Auth, $location, $http) {
+  constructor(Auth, $scope, $location, $http, socket) {
     var inst = this;
     inst.Auth = Auth;
     inst.$location = $location;
     inst.$http = $http;
-    //mock user
-    inst.user = {
-      name: 'orz',
-      skills: [{name: 'python', count: 2}, {name: 'js', count: 5}],
-      events: [{title: 'sample1', type: 'present', date: Date.now()}, {title: 'sample2', type: 'present', date: Date.now()}, {title: 'abcde', type: 'price', date: Date.now()}]
-    };
     inst.max = Number.NEGATIVE_INFINITY;
+    
+    inst.user = Auth.getCurrentUser();
+    inst.user.skills = [{name: 'python', count: 2}, {name: 'js', count: 5}];
+    inst.user.events = [];
     angular.forEach(inst.user.skills, (value) => {
       inst.max = Math.max(value.count, inst.max);
     });
-    console.log(this.Auth.getCurrentUser())
+    var uid = inst.user._id;
+    $http.get('/api/users/'+uid+'/events').then(response => {
+      //this.events = response.data;
+      inst.user.events = response.data;
+      socket.syncUpdates('event', inst.user.events);
+    });
+
+    $scope.$on('$destroy', function() {
+      socket.unsyncUpdates('event');
+    });
   }
 
   addEvent() {

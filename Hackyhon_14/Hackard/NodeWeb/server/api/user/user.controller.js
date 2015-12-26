@@ -144,6 +144,25 @@ export function destroyEvent(req, res, next) {
 }
 
 /**
+ *
+ */
+export function getEvents(req, res, next) {
+  var userId = req.user._id;
+  User.findOneAsync({ _id: userId }, '-salt -password')
+    .then(user => { // don't ever give out the password or salt
+      if (!user) {
+        return res.status(401).end();
+      }
+      Event.find({
+        _id: {$in: user.events}
+      }, (err, events) => {
+        res.json(events);
+      });
+    })
+    .catch(err => next(err));
+}
+
+/**
  * Get my info
  */
 export function me(req, res, next) {
@@ -154,12 +173,7 @@ export function me(req, res, next) {
       if (!user) {
         return res.status(401).end();
       }
-      Event.find({
-        _id: {$in: user.events}
-      }, (err, events) => {
-        user.events = events;
-        res.json(user);
-      });
+      res.json(user);
     })
     .catch(err => next(err));
 }

@@ -12,7 +12,7 @@ router.post('/:id/events', auth.isAuthenticated(), controller.createEvent);
 router.delete('/:id/events', auth.hasRole('admin'), controller.destroyEvent);
 router.get('/:id/events', auth.isAuthenticated(), controller.getEvents);
 router.get('/me', auth.isAuthenticated(), controller.me);
-router.put('/:id/password', auth.isAuthenticated(), controller.changePassword);
+router.put('/:id/password', auth.isAuthenticated(), controller.updateSetting);
 router.get('/:id', auth.isAuthenticated(), controller.show);
 router.post('/', controller.create);
 

@@ -98,15 +98,17 @@ export function destroy(req, res) {
 /**
  * Change a users password
  */
-export function changePassword(req, res, next) {
+export function updateSetting(req, res, next) {
   var userId = req.user._id;
   var oldPass = String(req.body.oldPassword);
   var newPass = String(req.body.newPassword);
+  var nfc = String(req.body.nfc);
 
   User.findByIdAsync(userId)
     .then(user => {
       if (user.authenticate(oldPass)) {
-        user.password = newPass;
+        user.password = newPass || user.password;
+        user.nfc = nfc || user.nfc;
         return user.saveAsync()
           .then(() => {
             res.status(204).end();

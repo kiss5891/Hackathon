@@ -122,7 +122,9 @@ export function changePassword(req, res, next) {
  * Create a user's event
  */
 export function createEvent(req, res, next) {
-  var userId = req.params.id || req.user._id;
+  var userId = req.user.role === 'admin' && req.params.id !== undefined
+    ? req.params.id
+    : req.user._id;
   var newEvent = new Event(req.body);
   newEvent.user = userId;
   newEvent.saveAsync()

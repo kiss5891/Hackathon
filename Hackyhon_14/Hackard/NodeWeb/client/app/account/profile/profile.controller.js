@@ -2,10 +2,11 @@
 
 class ProfileController {
 
-  constructor(Auth, $location) {
+  constructor(Auth, $location, $http) {
     var inst = this;
     inst.Auth = Auth;
     inst.$location = $location;
+    inst.$http = $http;
     //mock user
     inst.user = {
       name: 'orz',
@@ -16,6 +17,11 @@ class ProfileController {
     angular.forEach(inst.user.skills, (value) => {
       inst.max = Math.max(value.count, inst.max);
     });
+    console.log(this.Auth.getCurrentUser())
+  }
+
+  addEvent() {
+    this.$http.post('/api/users/'+this.Auth.getCurrentUser()._id+'/events', {title: 'abcde'});
   }
 }
 

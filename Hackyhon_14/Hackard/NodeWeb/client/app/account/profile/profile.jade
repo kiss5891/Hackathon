@@ -9,5 +9,5 @@ navbar
       label.profile-name {{vm.user.name}}
       div(ng-repeat="item in vm.skills")
         skillbar(models="vm.skills" model="item" max="vm.max")
-      div(ng-repeat="item in vm.user.events")
+      a(href="{{'/attend/' + item._id}}" ng-repeat="item in vm.user.events")
         evtblock(model="item")

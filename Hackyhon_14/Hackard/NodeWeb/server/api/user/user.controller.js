@@ -100,14 +100,16 @@ export function destroy(req, res) {
  */
 export function updateSetting(req, res, next) {
   var userId = req.user._id;
-  var oldPass = String(req.body.oldPassword);
-  var newPass = String(req.body.newPassword);
-  var nfc = String(req.body.nfc);
+  var oldPass = req.body.oldPassword;
+  var newPass = req.body.newPassword;
+  var nfc = req.body.nfc;
 
   User.findByIdAsync(userId)
     .then(user => {
       if (user.authenticate(oldPass)) {
-        user.password = newPass || user.password;
+        if(newPass) {
+          user.password = newPass;
+        }
         user.nfc = nfc || user.nfc;
         return user.saveAsync()
           .then(() => {

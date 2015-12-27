@@ -4,7 +4,7 @@
 
 class MainController {
 
-  constructor($http, $scope, socket) {
+  constructor($http) {
     this.$http = $http;
     this.conference = {
       title: '14th',

@@ -12,16 +12,39 @@ class ProfileController {
     inst.max = Number.NEGATIVE_INFINITY;
 
     inst.user = Auth.getCurrentUser();
-    inst.user.skills = [{name: 'python', count: 2}, {name: 'js', count: 5}];
     inst.user.events = [];
-    angular.forEach(inst.user.skills, (value) => {
-      inst.max = Math.max(value.count, inst.max);
-    });
+    function parseToSkills(evts) {
+      var skillStats = {};
+      angular.forEach(evts, val => {
+        angular.forEach(val.skills, sval => {
+          skillStats[sval] = skillStats[sval]?skillStats[sval]+1:1;
+        });
+      });
+      var skills = [];
+      var max = Number.NEGATIVE_INFINITY;
+      angular.forEach(skillStats, (val,key) => {
+        skills.push({name: key, count: val});
+        max = Math.max(val, max);
+      });
+      return {
+        skills: skills,
+        max: max
+      };
+    }
+    var skInfo = parseToSkills(inst.user.events);
+    inst.skills = skInfo.skills;
+    inst.max = skInfo.max;
     var uid = inst.user._id;
     $http.get('/api/users/'+uid+'/events').then(response => {
-      //this.events = response.data;
       inst.user.events = response.data;
-      socket.syncUpdates('event', inst.user.events);
+      var skInfo = parseToSkills(inst.user.events);
+      inst.skills = skInfo.skills;
+      inst.max = skInfo.max;
+      socket.syncUpdates('event', inst.user.events, function() {
+        var skInfo = parseToSkills(inst.user.events);
+        inst.skills = skInfo.skills;
+        inst.max = skInfo.max;
+      });
     });
 
     $scope.$on('$destroy', function() {

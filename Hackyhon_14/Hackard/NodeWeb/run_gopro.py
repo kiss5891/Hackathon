@@ -12,9 +12,12 @@ def fun():
     camera.locate('off')
 
 def saveLast():
+  while len(camera.media) == 0:
+    pass
   lastMedia = camera.media[len(camera.media)-1]
   lastMedia.save('./client/assets/images/photo.png')
 
+camera.delete_all()
 fun()
 saveLast()
 

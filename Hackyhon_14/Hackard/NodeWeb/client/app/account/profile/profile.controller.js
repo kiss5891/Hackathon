@@ -2,7 +2,7 @@
 
 class ProfileController {
 
-  constructor(Auth, $scope, $location, $http) {
+  constructor(Auth, $scope, $location, $http, socket) {
     var inst = this;
     inst.Auth = Auth;
     inst.$location = $location;
@@ -29,14 +29,29 @@ class ProfileController {
         max: max
       };
     }
-    $http.get('/api/users/me').then(response => {
-      inst.user.events = response.data.events;
+    var skInfo = parseToSkills(inst.user.events);
+    inst.skills = skInfo.skills;
+    inst.max = skInfo.max;
+    var uid = inst.user._id;
+    $http.get('/api/users/'+uid+'/events').then(response => {
+      inst.user.events = response.data;
+    /*$http.get('/api/users/me').then(response => {
+      inst.user.events = response.data.events;*/
       var skInfo = parseToSkills(inst.user.events);
       inst.skills = skInfo.skills;
       inst.max = skInfo.max;
+      socket.syncUpdates('event', inst.user.events, function() {
+        var skInfo = parseToSkills(inst.user.events);
+        inst.skills = skInfo.skills;
+        inst.max = skInfo.max;
+      });
       setTimeout(() => {
         $scope.$apply();
       });
+    });
+
+    $scope.$on('$destroy', function() {
+      socket.unsyncUpdates('event');
     });
   }
 

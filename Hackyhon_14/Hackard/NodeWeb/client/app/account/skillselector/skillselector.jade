@@ -6,8 +6,5 @@ navbar
     .col-sm-12
       div(ng-repeat="item in vm.items")
         skblock(model="item.value" active="item.active" ng-click="vm.chooseSkill($event,item)")
-  .row
-    .col-sm-3
-    .col-sm-6
-      button.btn.btn-primary(ng-click="vm.selectSkills()" style="width:50%;") OK
-    .col-sm-3
+  div(style="display:flex")
+    button.btn.btn-primary(ng-click="vm.selectSkills()" style="width:50%;margin:auto;") OK

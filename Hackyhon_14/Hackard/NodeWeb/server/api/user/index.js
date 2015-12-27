@@ -13,6 +13,7 @@ router.put('/:id/events', auth.isAuthenticated(), controller.updateEvent);
 router.delete('/:id/events', auth.hasRole('admin'), controller.destroyEvent);
 router.get('/:id/events', auth.isAuthenticated(), controller.getEvents);
 router.get('/:id/events/:eventId', auth.isAuthenticated(), controller.getEventById);
+router.get('/nfcLogin/:id', controller.nfcLogin)
 router.get('/me', auth.isAuthenticated(), controller.me);
 router.put('/:id/password', auth.isAuthenticated(), controller.updateSetting);
 router.get('/:id', auth.isAuthenticated(), controller.show);

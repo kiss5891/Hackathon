@@ -134,12 +134,27 @@ export function createEvent(req, res, next) {
     .catch(validationError(res));
 }
 
+export function nfcLogin(req, res) {
+  var nfc = req.params.id;
+
+  User.findOneAsync({nfc: nfc}, '-salt -password')
+    .then(user => {
+      var newEvent = new Event({user: user._id});
+      newEvent.saveAsync()
+        .then(event => {
+          res.status(200).json(event);
+        })
+        .catch(validationError(res));
+    })
+    .catch(handleError(res));
+}
+
 /**
  * Update event
  */
 export function updateEvent(req, res, next) {
   var eventId = req.params.id;
-  var skills = String(req.body.skills);
+  var skills = req.body.skills;
 
   Event.findByIdAsync(eventId)
     .then(event => {

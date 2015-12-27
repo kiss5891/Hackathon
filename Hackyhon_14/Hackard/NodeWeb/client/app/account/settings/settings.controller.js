@@ -14,7 +14,7 @@ class SettingsController {
     this.submitted = true;
 
     if (form.$valid) {
-      this.Auth.updateSetting(this.user.oldPassword, this.user.newPassword)
+      this.Auth.updateSetting(this.user)
         .then(() => {
           this.message = 'Setting successfully changed.';
         })

@@ -77,15 +77,14 @@ function AuthService($location, $http, $cookies, $q, appConfig, Util, User) {
      * @param  {Function} callback    - optional, function(error, user)
      * @return {Promise}
      */
-    updateSetting(oldPassword, newPassword, callback) {
-      return User.updateSetting({ id: currentUser._id }, {
-        oldPassword: oldPassword,
-        newPassword: newPassword
-      }, function() {
-        return safeCb(callback)(null);
-      }, function(err) {
-        return safeCb(callback)(err);
-      }).$promise;
+    updateSetting(user, callback) {
+      return User.updateSetting({ id: currentUser._id }, user,
+        function() {
+         return safeCb(callback)(null);
+        },
+        function(err) {
+          return safeCb(callback)(err);
+        }).$promise;
     },
 
     /**

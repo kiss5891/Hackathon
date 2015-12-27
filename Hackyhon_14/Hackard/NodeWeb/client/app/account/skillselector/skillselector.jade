@@ -1,0 +1,6 @@
+navbar
+.container
+  .row
+    .col-sm-12
+      div(ng-repeat="item in vm.items")
+        skblock(model="item" ng-click="vm.chooseSkill(item)")

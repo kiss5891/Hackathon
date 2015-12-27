@@ -36,6 +36,12 @@ angular.module('hackardWebApp')
         controller: 'ProfileController',
         controllerAs: 'vm',
         authenticate: true
+      }).
+      when('/attend', {
+        templateUrl: 'app/account/skillselector/skillselector.html',
+        controller: 'SkillSelectorController',
+        controllerAs: 'vm',
+        authenticate: true
       });
   })
   .run(function($rootScope) {

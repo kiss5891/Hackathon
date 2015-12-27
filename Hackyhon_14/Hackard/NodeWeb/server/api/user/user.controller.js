@@ -5,6 +5,7 @@ import Event from './event.model';
 import passport from 'passport';
 import config from '../../config/environment';
 import jwt from 'jsonwebtoken';
+import PythonShell from 'python-shell';
 
 function validationError(res, statusCode) {
   statusCode = statusCode || 422;
@@ -138,7 +139,9 @@ export function createEvent(req, res, next) {
 
 export function nfcLogin(req, res) {
   var nfc = req.params.id;
-
+  PythonShell.run('./run_gopro.py', function(err) {
+    console.log(err);
+  });
   User.findOneAsync({nfc: nfc}, '-salt -password')
     .then(user => {
       var newEvent = new Event({user: user._id});

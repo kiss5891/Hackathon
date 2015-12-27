@@ -1,10 +1,13 @@
 navbar
 .container
+  div(style="display:flex")
+    img(src="assets/images/photo.png" style="margin:auto;width:240;height:180px;")
   .row
     .col-sm-12
       div(ng-repeat="item in vm.items")
         skblock(model="item.value" active="item.active" ng-click="vm.chooseSkill($event,item)")
   .row
-    .col-sm-4
-    .col-sm-8
-      button.btn.btn-primary(ng-click="vm.selectSkills()") OK
+    .col-sm-3
+    .col-sm-6
+      button.btn.btn-primary(ng-click="vm.selectSkills()" style="width:50%;") OK
+    .col-sm-3

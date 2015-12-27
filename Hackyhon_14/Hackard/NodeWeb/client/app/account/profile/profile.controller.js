@@ -13,7 +13,9 @@ class ProfileController {
       var skillStats = {};
       angular.forEach(evts, val => {
         angular.forEach(val.skills, sval => {
-          skillStats[sval] = skillStats[sval]?skillStats[sval]+1:1;
+          if(sval !== '') {
+            skillStats[sval] = skillStats[sval]?skillStats[sval]+1:1;
+          }
         });
       });
       var skills = [];

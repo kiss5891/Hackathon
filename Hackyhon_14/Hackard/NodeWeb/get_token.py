@@ -11,10 +11,12 @@ cookie = cookie.split('\n')[0].split('\t')
 cookie = cookie[len(cookie) - 1]
 xsrf_token = urllib.unquote(cookie).decode('utf8') 
 
-print json.loads(check_output([
+output = json.loads(check_output([
     'curl',
     '--cookie', 'cookie.txt',
     root + 'auth/local',
     '-H', 'X-XSRF-TOKEN:' + xsrf_token,
     '-X', 'POST', '-d', 'email=' + email + '&password=' + password
-]))['token']
+]))
+output['xsrf'] = xsrf_token
+print json.dumps(output)

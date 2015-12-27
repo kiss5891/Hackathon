@@ -9,8 +9,5 @@ angular.module('hackardWebApp')
     templateUrl: 'components/skblock/skblock.html',
     restrict: 'E',
     controller: 'SkillBlockController',
-    controllerAs: 'skb',
-    link: function(scope, element) {
-      
-    }
+    controllerAs: 'skb'
   }));

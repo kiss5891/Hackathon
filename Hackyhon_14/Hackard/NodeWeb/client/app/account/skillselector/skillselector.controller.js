@@ -1,21 +1,23 @@
 'use strict';
 
-var skillItems = [{value: 'JavaScript'},
-{value: 'C/C++'},
-{value: 'Python'},
-{value: 'Ruby'},
-{value: 'OpenCV'},
-{value: 'Java'},
-{value: 'SolidWorks'}];
 
 class SkillSelectorController {
 
-  constructor(Auth, $routeParams, $scope, $timeout) {
+  constructor(Auth, $routeParams, $location, $scope, $timeout, $http) {
     var inst = this;
+    var skillItems = [{value: 'JavaScript'},
+    {value: 'C/C++'},
+    {value: 'Python'},
+    {value: 'Ruby'},
+    {value: 'OpenCV'},
+    {value: 'Java'},
+    {value: 'SolidWorks'}];
     inst.Auth = Auth;
     inst.routeParams = $routeParams;
+    inst.$location = $location;
     inst.scope = $scope;
     inst.timeout = $timeout;
+    inst.$http = $http;
     inst.items = skillItems;
     inst.skills = [];
   }
@@ -36,9 +38,11 @@ class SkillSelectorController {
   }
 
   selectSkills() {
-    //TODO call api
-    console.log(this.routeParams.eventId);
-    console.log(this.skills);
+    this.$http.put('/api/users/'+this.routeParams.eventId+'/events', {
+      skills: this.skills.map(skill => skill.value)
+    }).then(() => {
+      this.$location.path('/profile');
+    });
   }
 }
 

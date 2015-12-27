@@ -135,6 +135,24 @@ export function createEvent(req, res, next) {
 }
 
 /**
+ * Update event
+ */
+export function updateEvent(req, res, next) {
+  var eventId = req.params.id;
+  var skills = String(req.body.skills);
+
+  Event.findByIdAsync(eventId)
+    .then(event => {
+      event.skills = skills;;
+      return event.saveAsync()
+        .then(() => {
+          res.status(204).end();
+        })
+        .catch(validationError(res));
+    });
+}
+
+/**
  * destroy a user's event
  */
 export function destroyEvent(req, res, next) {

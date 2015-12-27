@@ -143,7 +143,7 @@ export function updateEvent(req, res, next) {
 
   Event.findByIdAsync(eventId)
     .then(event => {
-      event.skills = skills;;
+      event.skills = skills;
       return event.saveAsync()
         .then(() => {
           res.status(204).end();
@@ -180,6 +180,24 @@ export function getEvents(req, res, next) {
       });
     })
     .catch(err => next(err));
+}
+
+/**
+ *
+ */
+export function getEventById(req, res, next) {
+  var userId = req.user._id;
+  var eventId = req.params.eventId;
+  Event.findOneAsync({
+    _id: eventId,
+    user: userId
+  }).then(event => {
+    if(!event) {
+      return res.status(401).end();
+    }
+    res.json(event);
+  })
+  .catch(err => next(err));
 }
 
 /**

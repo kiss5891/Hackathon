@@ -20,13 +20,13 @@ class SkillSelectorController {
     inst.$http = $http;
     inst.items = skillItems;
     inst.skills = [];
+    this.getEvent()
   }
 
   chooseSkill(evt, item) {
-    var idx = this.skills.indexOf(item);
+    var idx = this.skills.indexOf(item.value);
     if(idx < 0) {
-      this.skills.push(item);
-      //item.highlight();
+      this.skills.push(item.value);
       item.active = true;
       this.timeout(()=>{this.scope.$apply();});
     }
@@ -39,9 +39,28 @@ class SkillSelectorController {
 
   selectSkills() {
     this.$http.put('/api/users/'+this.routeParams.eventId+'/events', {
-      skills: this.skills.map(skill => skill.value)
+      skills: this.skills
     }).then(() => {
       this.$location.path('/profile');
+    });
+  }
+
+  getEvent() {
+    var uid = this.Auth.getCurrentUser()._id;
+    var eventId = this.routeParams.eventId;
+    this.$http.get('api/users/'+uid+'/events/'+eventId)
+    .then((res) => {
+      //iterate skills-arr
+      var skills = res.data.skills;
+      angular.forEach(skills, (val) => {
+        var fItem = this.items.filter(i=>i.value === val)
+        var len = fItem.length;
+        if(len > 0) {
+          fItem[0].active = true;
+          this.skills.push(fItem[0].value);
+          this.timeout(()=>{this.scope.$apply();});
+        }
+      });
     });
   }
 }

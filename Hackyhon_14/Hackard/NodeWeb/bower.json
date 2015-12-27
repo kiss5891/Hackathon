@@ -13,7 +13,7 @@
     "angular-route": "~1.4.0",
     "angular-bootstrap": "~0.13.0",
     "font-awesome": ">=4.1.0",
-    "lodash": "~2.4.1",
+    "lodash": "~3.10.1",
     "angular-socket-io": "~0.7.0",
     "angular-validation-match": "~1.5.2",
     "angularjs-nvd3-directives": "~0.0.7"

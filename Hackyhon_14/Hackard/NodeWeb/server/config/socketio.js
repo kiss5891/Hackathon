@@ -17,9 +17,7 @@ function onConnect(socket) {
   });
 
   // Insert sockets below
-  require('../api/thing/thing.socket').register(socket);
   require('../api/user/event.socket').register(socket);
-
 }
 
 export default function(socketio) {

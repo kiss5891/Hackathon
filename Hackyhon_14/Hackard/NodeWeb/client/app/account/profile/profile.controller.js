@@ -1,5 +1,7 @@
 'use strict';
 
+var skillItems = ['JavaScript', 'C/C++', 'Python', 'Ruby', 'OpenCV', 'Java', 'SolidWorks'];
+
 class ProfileController {
 
   constructor(Auth, $scope, $location, $http, socket) {
@@ -8,7 +10,7 @@ class ProfileController {
     inst.$location = $location;
     inst.$http = $http;
     inst.max = Number.NEGATIVE_INFINITY;
-    
+
     inst.user = Auth.getCurrentUser();
     inst.user.skills = [{name: 'python', count: 2}, {name: 'js', count: 5}];
     inst.user.events = [];
@@ -28,7 +30,10 @@ class ProfileController {
   }
 
   addEvent() {
-    this.$http.post('/api/users/'+this.Auth.getCurrentUser()._id+'/events', {title: 'abcde'});
+    this.$http.post('/api/users/'+this.Auth.getCurrentUser()._id+'/events', {
+      title: 'abcde',
+      skills: _.sample(skillItems, _.random(0, 7))
+    });
   }
 }
 

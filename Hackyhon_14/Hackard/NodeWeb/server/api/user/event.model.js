@@ -10,6 +10,7 @@ var EventSchema = new Schema({
   type: String,
   user: {type: Schema.ObjectId, ref:'User', childPath: 'events'},
   date: {type: Date, default: Date.now},
+  skills: [String]
 });
 EventSchema.plugin(relationship, {relationshipPathName: 'user'});
 

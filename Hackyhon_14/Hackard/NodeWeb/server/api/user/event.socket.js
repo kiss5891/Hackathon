@@ -23,7 +23,9 @@ export function register(socket) {
 
 function createListener(event, socket) {
   return function(doc) {
-    socket.emit(event, doc);
+    if(doc.user && socket.decoded_token._id === doc.user.toString()) {
+      socket.emit(event, doc);
+    }
   };
 }
 

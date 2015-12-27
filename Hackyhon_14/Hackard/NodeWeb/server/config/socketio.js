@@ -38,6 +38,13 @@ export default function(socketio) {
   //   handshake: true
   // }));
 
+   var socketioJwt = require('socketio-jwt');
+
+  socketio.use(socketioJwt.authorize({
+     secret: config.secrets.session,
+     handshake: true
+  }));
+
   socketio.on('connection', function(socket) {
     socket.address = socket.request.connection.remoteAddress +
       ':' + socket.request.connection.remotePort;

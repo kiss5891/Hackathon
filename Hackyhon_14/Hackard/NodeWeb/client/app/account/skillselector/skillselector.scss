@@ -10,6 +10,10 @@
     cursor: pointer;
     box-shadow: 4px 3px #666;
   }
+  &.active {
+    cursor: pointer;
+    box-shadow: 4px 3px #666;
+  }
 }
 
 .sk-title {

@@ -3,4 +3,8 @@ navbar
   .row
     .col-sm-12
       div(ng-repeat="item in vm.items")
-        skblock(model="item" ng-click="vm.chooseSkill(item)")
+        skblock(model="item.value" active="item.active" ng-click="vm.chooseSkill($event,item)")
+  .row
+    .col-sm-4
+    .col-sm-8
+      button.btn.btn-primary(ng-click="vm.selectSkills()") OK

@@ -2,7 +2,7 @@
 
 class ProfileController {
 
-  constructor(Auth, $scope, $location, $http, socket) {
+  constructor(Auth, $scope, $location, $http) {
     var inst = this;
     inst.Auth = Auth;
     inst.$location = $location;

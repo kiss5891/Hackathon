@@ -37,7 +37,7 @@ angular.module('hackardWebApp')
         controllerAs: 'vm',
         authenticate: true
       }).
-      when('/attend', {
+      when('/attend/:eventId', {
         templateUrl: 'app/account/skillselector/skillselector.html',
         controller: 'SkillSelectorController',
         controllerAs: 'vm',

@@ -3,10 +3,14 @@
 angular.module('hackardWebApp')
   .directive('skblock', () => ({
     scope: {
-      model: '='
+      model: '=',
+      active: '='
     },
     templateUrl: 'components/skblock/skblock.html',
     restrict: 'E',
     controller: 'SkillBlockController',
-    controllerAs: 'skb'
+    controllerAs: 'skb',
+    link: function(scope, element) {
+      
+    }
   }));

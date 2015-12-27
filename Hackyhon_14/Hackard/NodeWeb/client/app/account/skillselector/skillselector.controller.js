@@ -20,7 +20,7 @@ class SkillSelectorController {
     inst.$http = $http;
     inst.items = skillItems;
     inst.skills = [];
-    this.getEvent()
+    this.getEvent();
   }
 
   chooseSkill(evt, item) {
@@ -53,7 +53,7 @@ class SkillSelectorController {
       //iterate skills-arr
       var skills = res.data.skills;
       angular.forEach(skills, (val) => {
-        var fItem = this.items.filter(i=>i.value === val)
+        var fItem = this.items.filter(i=>i.value === val);
         var len = fItem.length;
         if(len > 0) {
           fItem[0].active = true;

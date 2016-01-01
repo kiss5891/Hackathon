@@ -1,0 +1,10 @@
+div(ng-controller='ConfInfoController')
+  .row
+    .col-sm-6
+      .app-title {{item.title}}
+      br
+      div(ng-repeat="p in item.prices")
+        a(href="/#").price-title {{p.title}}
+    .col-sm-6
+      nvd3-pie-chart(data="item.users" width="320" height="320" x="xFunc()" y="yFunc()" showLabels="true")
+      svg

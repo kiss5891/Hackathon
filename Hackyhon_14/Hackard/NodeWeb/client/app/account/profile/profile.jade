@@ -1,0 +1,13 @@
+navbar
+.container
+  //button(ng-click='vm.addEvent()') TEST
+  .row
+    .col-sm-12
+      h1 Profile
+     .col-sm-12
+      img.profile-avatar
+      label.profile-name {{vm.user.name}}
+      div(ng-repeat="item in vm.skills")
+        skillbar(models="vm.skills" model="item" max="vm.max")
+      a(href="{{'/attend/' + item._id}}" ng-repeat="item in vm.user.events")
+        evtblock(model="item")

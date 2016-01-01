@@ -1,0 +1,22 @@
+.skblock {
+  position: relative;
+  display: flex;
+  width: 240px;
+  height: 140px;
+  background-color: #aeaeae;
+  margin: 5px;
+  float: left;
+  &:hover {
+    cursor: pointer;
+    box-shadow: 4px 3px #666;
+  }
+  &.active {
+    cursor: pointer;
+    box-shadow: 4px 3px #666;
+  }
+}
+
+.sk-title {
+  margin: auto;
+  font-size: 32px;
+}

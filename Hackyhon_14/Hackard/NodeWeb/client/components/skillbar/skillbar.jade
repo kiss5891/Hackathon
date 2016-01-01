@@ -1,0 +1,7 @@
+div(ng-controller='SkillbarController')
+  .row
+    .col-sm-11
+      .progress
+        .progress-bar(role="progressbar" aria-valuenow="{{item.value}}" aria-valuemin="0" aria-valuemax="0")
+    .col-sm-1
+      label.skillbarinfo.pull-right {{item.text}}
